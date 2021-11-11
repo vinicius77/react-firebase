@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { CHARACTERS } from './constants/characters';
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_API_KEY,
@@ -22,7 +23,7 @@ initializeApp(firebaseConfig);
 const db = getFirestore();
 
 // Collection reference
-const charactersRef = collection(db, 'characters');
+const charactersRef = collection(db, CHARACTERS);
 
 // Getting the Collection Data
 getDocs(charactersRef)
@@ -37,7 +38,7 @@ getDocs(charactersRef)
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<App charactersRef={charactersRef} db={db} />
 	</React.StrictMode>,
 	document.getElementById('root')
 );
