@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, /*getDocs*/ onSnapshot } from 'firebase/firestore';
 import { CHARACTERS } from './constants/characters';
 
 const firebaseConfig = {
@@ -26,7 +26,7 @@ const db = getFirestore();
 const charactersRef = collection(db, CHARACTERS);
 
 // Getting the Collection Data
-getDocs(charactersRef)
+/*getDocs(charactersRef)
 	.then((snapshot) => {
 		let characters = [];
 		snapshot.docs.forEach((doc) => {
@@ -35,6 +35,15 @@ getDocs(charactersRef)
 		console.log(characters);
 	})
 	.catch((error) => console.log(error));
+	*/
+
+onSnapshot(charactersRef, (snapshot) => {
+	let characters = [];
+	snapshot.docs.forEach((doc) => {
+		characters.push({ ...doc.data(), id: doc.id });
+	});
+	console.log(characters);
+});
 
 ReactDOM.render(
 	<React.StrictMode>
